@@ -49,10 +49,10 @@ public class ZoomCircleView extends View implements View.OnClickListener {
 
     private void init() {
 
-        mCount = 2;
+        mCount = 3;
 
         circlePaint = new Paint();
-        circlePaint.setColor(Color.parseColor("#99CC99"));
+        circlePaint.setColor(Color.parseColor("#3399CC"));
         circlePaint.setStyle(Paint.Style.FILL);
         circlePaint.setAntiAlias(true);
 
@@ -78,8 +78,8 @@ public class ZoomCircleView extends View implements View.OnClickListener {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         mWidth = MeasureSpec.getSize(widthMeasureSpec);
         mHeight = MeasureSpec.getSize(heightMeasureSpec);
-        mMaxRadius = Math.min(mWidth, mHeight) / 2;
-        mMinRadius = Math.min(mWidth, mHeight) / 10;
+        mMaxRadius = Math.min(mWidth, mHeight) / 2-30;
+        mMinRadius = Math.min(mWidth, mHeight) / 8;
         // mMaxRadius = 300;
         mRadius = mMaxRadius;
         mOrgTotalSeconds = ((mMaxRadius - mMinRadius) / 60.0f) * 1000;
@@ -96,8 +96,6 @@ public class ZoomCircleView extends View implements View.OnClickListener {
                 isFinishCycle = false;
             }
         }
-        // updateRadius(3000, 5000);
-        // invalidate();
     }
 
 
@@ -105,10 +103,8 @@ public class ZoomCircleView extends View implements View.OnClickListener {
         if (isTight) {
             mRadius -= mOrgTotalSeconds / (tight * HOLD_RATIO);
             if (mRadius < mMinRadius) {
-
                 isTight = false;
                 mRadius = mMinRadius;
-
                 try {
                     Thread.sleep((long) (tight * (1 - HOLD_RATIO)));
                 } catch (InterruptedException e) {
@@ -118,12 +114,9 @@ public class ZoomCircleView extends View implements View.OnClickListener {
         } else {
             mRadius += mOrgTotalSeconds / (loose * HOLD_RATIO);
             if (mRadius > mMaxRadius) {
-
                 isTight = true;
-                // isFinishCycle = false;
                 mCount--;
                 mRadius = mMaxRadius;
-
                 try {
                     Thread.sleep((long) (loose * (1 - HOLD_RATIO)));
                 } catch (InterruptedException e) {
@@ -140,6 +133,5 @@ public class ZoomCircleView extends View implements View.OnClickListener {
         // invalidate();
         isFinishCycle = true;
         invalidate();
-
     }
 }
