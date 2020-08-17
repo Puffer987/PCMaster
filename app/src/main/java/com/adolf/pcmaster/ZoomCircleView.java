@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
  * @author: Adolf
  * @create: 2020-08-13 15:17
  **/
-public class ZoomCircleView extends View implements View.OnClickListener {
+public class ZoomCircleView extends View {
     private final String TAG = "[jq]ZoomCircle";
     private int mWidth, mHeight; // 控件的整体宽高
     private Paint circlePaint;
@@ -30,33 +31,26 @@ public class ZoomCircleView extends View implements View.OnClickListener {
     private float mOrgTotalSeconds;
 
     private boolean isFinishACycle;
-    private int mCount; // 循环次数
-    private long mTight, mTightHold, mLoose, mLooseHold;// 振动频率
-    private long[] mPattern;
+    // private int mCount; // 循环次数
+    // private long mTight, mTightHold, mLoose, mLooseHold;// 振动频率
+    private long[] mPattern = {0, 0, 0, 0};
     private int curIndex;
     private boolean isClick;
 
-    public ZoomCircleView(Context context, String model, int loop) {
+    public ZoomCircleView(Context context) {
         this(context, null);
-        setModelAndLoop(model, loop);
     }
 
     public ZoomCircleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
         // timeLooper();
-        setOnClickListener(this);
     }
 
     private void init() {
         isTight = true;
-        curIndex = 0;
 
-        mTight = 500;
-        mTightHold = 500;
-        mLoose = 500;
-        mLooseHold = 500;
-        mCount = 3;
+        curIndex = -1; // 保证正在执行时，再次点击触发更新操作
 
         circlePaint = new Paint();
         circlePaint.setColor(Color.parseColor("#3399CC"));
@@ -94,11 +88,15 @@ public class ZoomCircleView extends View implements View.OnClickListener {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         mWidth = MeasureSpec.getSize(widthMeasureSpec);
         mHeight = MeasureSpec.getSize(heightMeasureSpec);
-        mMaxRadius = Math.min(mWidth, mHeight) / 2 - 30;
-        mMinRadius = Math.min(mWidth, mHeight) / 8;
+        int min = Math.min(mWidth, mHeight);
+        mHeight = min;
+        mWidth = min;
+        mMaxRadius = (min >> 1) - (min >> 3);
+        mMinRadius = min >> 3;
         // mMaxRadius = 300;
         mRadius = mMaxRadius;
         mOrgTotalSeconds = ((mMaxRadius - mMinRadius) / 60.0f) * 1000;
+        setMeasuredDimension(min, min);
     }
 
     @Override
@@ -114,14 +112,13 @@ public class ZoomCircleView extends View implements View.OnClickListener {
                 isFinishACycle = false; // 继续update
             } else {
                 isClick = false;// 退出
+                curIndex = -1; // 循环结束，再次设为负数
             }
-            Log.d(TAG, "isFinish: " + isFinishACycle + ", isClick: " + isClick + ", curIndex: " + curIndex + ", is :" + (curIndex + 4 < mPattern.length));
+            invalidate();
         }
 
-        canvas.drawCircle(mWidth / 2, mHeight / 2, mRadius, circlePaint);
-        invalidate();
+        canvas.drawCircle(mWidth >> 1, mHeight >> 1, mRadius, circlePaint);
     }
-
 
     private void updateRadius(long tight, long tightHold, long loose, long looseHold) {
         if (isTight) {
@@ -138,7 +135,6 @@ public class ZoomCircleView extends View implements View.OnClickListener {
         } else {
             if (mRadius < mMaxRadius) {
                 mRadius = Math.min(mRadius + (mOrgTotalSeconds / loose), mMaxRadius);
-                Log.d(TAG, "mRadius==mMaxRadius: "+(mRadius==mMaxRadius));
             } else if (mRadius == mMaxRadius) {
                 isTight = true;
                 isFinishACycle = true;
@@ -151,18 +147,38 @@ public class ZoomCircleView extends View implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        Log.d(TAG, "onClick");
-
-        isTight = true;
-
-        isFinishACycle = false;
-        isClick = true;
-        curIndex = 0;
-        invalidate();
+    public void doUpdateRadius(View v) {
+        if (curIndex < 0) {
+            Log.d(TAG, "do onClick");
+            isTight = true;
+            isFinishACycle = false;
+            isClick = true;
+            curIndex = 0;
+            invalidate();
+        }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                event.getX();
+                Log.d(TAG, "down");
+                // break;
+            case MotionEvent.ACTION_UP:
+                if (curIndex < 0) {
+                    Log.d(TAG, "up");
+                    isTight = true;
+                    isFinishACycle = false;
+                    isClick = true;
+                    curIndex = 0;
+                    invalidate();
+                }
+                break;
+        }
+
+        return super.onTouchEvent(event);
+    }
 
     private long[] str2long(String inStr, int loop) throws Exception {
         String sumStr = "";
@@ -190,6 +206,7 @@ public class ZoomCircleView extends View implements View.OnClickListener {
         for (int i = 0; i < s.length % 4; i++) {
             patten[s.length + i] = 0;
         }
+        patten[patten.length - 1] = 0; // 最后一个停顿不要
 
         Log.d(TAG, "length：" + patten.length);
         return patten;

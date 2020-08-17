@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,18 +20,24 @@ public class MainActivity extends AppCompatActivity {
     Button mBtnLetsGo;
     @BindView(R.id.zoom_circle)
     ZoomCircleView mZoomCircle;
+    private Unbinder mUnbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
 
         mZoomCircle.setModelAndLoop("500 500 500 500 1300 1300 500 3000",0);
     }
-
     @OnClick(R.id.btn_lets_go)
     public void onViewClicked() {
         startActivity(new Intent(this, TrainingActivity.class));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
     }
 }

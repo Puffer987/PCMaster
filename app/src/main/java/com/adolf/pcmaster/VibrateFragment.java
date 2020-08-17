@@ -1,22 +1,33 @@
 package com.adolf.pcmaster;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
+import androidx.fragment.app.Fragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class VibrateFragment extends Fragment {
 
     private static final String TAG = "VibrateFragment";
     private static final String MODEL = "model";
     private static final String LOOP = "loop";
+    @BindView(R.id.zoom_circle)
+    ZoomCircleView mZoomCircle;
+    @BindView(R.id.parent_frame)
+    FrameLayout mParentFrame;
 
     private String mModel;
     private String mLoop;
+    // private ZoomCircleView mZoomCircle;
+    private Unbinder mUnbinder;
 
     public VibrateFragment() {
         // Required empty public constructor
@@ -38,13 +49,29 @@ public class VibrateFragment extends Fragment {
             mModel = getArguments().getString(MODEL);
             mLoop = getArguments().getString(LOOP);
 
+            assert mLoop != null;
             Log.d(TAG, "mModel: " + mModel + "mLoop" + mLoop);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vibrate, container, false);
+        View view = inflater.inflate(R.layout.fragment_vibrate, container, false);
+
+        mUnbinder = ButterKnife.bind(this, view);
+        mZoomCircle.setModelAndLoop(mModel, Integer.parseInt(mLoop));
+
+        return view;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
+    }
+
+    // @OnClick(R.id.zoom_circle)
+    // public void onViewClicked() {
+    //     Log.d(TAG, "onClick: ");
+    // }
 }

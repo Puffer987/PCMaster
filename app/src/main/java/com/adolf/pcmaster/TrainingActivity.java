@@ -51,10 +51,8 @@ public class TrainingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_training);
         ButterKnife.bind(this);
 
-        // mVib = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+        mVib = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
 
-
-        
 
         init();
     }
@@ -105,7 +103,6 @@ public class TrainingActivity extends AppCompatActivity {
 
 
         // 屏幕常亮
-
     }
 
     private long[] str2long(String inStr, int loop) throws Exception {
