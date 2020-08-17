@@ -104,34 +104,31 @@ public class ZoomCircleView extends View implements View.OnClickListener {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawCircle(mWidth / 2, mHeight / 2, mRadius, circlePaint);
+
         if (isClick) {
             if (!isFinishACycle) {
                 updateRadius(mPattern[curIndex], mPattern[curIndex + 1], mPattern[curIndex + 2], mPattern[curIndex + 3]);
 
             } else if (curIndex + 4 < mPattern.length) {
                 curIndex += 4;
-                isFinishACycle = false;
+                isFinishACycle = false; // 继续update
             } else {
-                isClick = false;
+                isClick = false;// 退出
             }
             Log.d(TAG, "isFinish: " + isFinishACycle + ", isClick: " + isClick + ", curIndex: " + curIndex + ", is :" + (curIndex + 4 < mPattern.length));
-
-            invalidate();
         }
 
-
+        canvas.drawCircle(mWidth / 2, mHeight / 2, mRadius, circlePaint);
+        invalidate();
     }
 
 
     private void updateRadius(long tight, long tightHold, long loose, long looseHold) {
         if (isTight) {
-            isFinishACycle = tight < 0;
-            mRadius -= mOrgTotalSeconds / tight;
-
-            if (mRadius < mMinRadius) {
+            if (mRadius > mMinRadius) {
+                mRadius = Math.max(mRadius - (mOrgTotalSeconds / tight), mMinRadius);
+            } else if (mRadius == mMinRadius) {
                 isTight = false;
-                mRadius = mMinRadius;
                 try {
                     Thread.sleep(tightHold);
                 } catch (InterruptedException e) {
@@ -139,14 +136,14 @@ public class ZoomCircleView extends View implements View.OnClickListener {
                 }
             }
         } else {
-            isFinishACycle = loose < 0;
-            mRadius += mOrgTotalSeconds / loose;
-            if (mRadius > mMaxRadius) {
+            if (mRadius < mMaxRadius) {
+                mRadius = Math.min(mRadius + (mOrgTotalSeconds / loose), mMaxRadius);
+                Log.d(TAG, "mRadius==mMaxRadius: "+(mRadius==mMaxRadius));
+            } else if (mRadius == mMaxRadius) {
                 isTight = true;
-                mRadius = mMaxRadius;
+                isFinishACycle = true;
                 try {
                     Thread.sleep(looseHold);
-                    isFinishACycle = true;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -158,14 +155,7 @@ public class ZoomCircleView extends View implements View.OnClickListener {
     public void onClick(View v) {
         Log.d(TAG, "onClick");
 
-        // mTight = 500;
-        // mTightHold = 500;
-        // mLoose = 5000;
-        // mLooseHold = 2000;
-
         isTight = true;
-        // mCount = 2;
-        // updateRadius(mPattern[curIndex], mPattern[curIndex + 1], mPattern[curIndex + 2], mPattern[curIndex + 3]);
 
         isFinishACycle = false;
         isClick = true;

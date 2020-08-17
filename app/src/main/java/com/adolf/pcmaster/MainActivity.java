@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mZoomCircle.setModelAndLoop("500 500 500 500 1300 1300 500 500",0);
+        mZoomCircle.setModelAndLoop("500 500 500 500 1300 1300 500 3000",0);
     }
 
     @OnClick(R.id.btn_lets_go)
