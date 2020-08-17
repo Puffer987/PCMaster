@@ -16,7 +16,7 @@
             android:enabled="true"
             android:exported="true"></service>
 
-        <activity android:name=".TrainingActivity" />
+        <activity android:name=".ui.TrainingActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

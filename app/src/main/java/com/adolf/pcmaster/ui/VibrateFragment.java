@@ -1,13 +1,19 @@
-package com.adolf.pcmaster;
+package com.adolf.pcmaster.ui;
 
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.adolf.pcmaster.R;
+import com.adolf.pcmaster.view.ZoomCircleView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,7 +22,7 @@ import butterknife.Unbinder;
 
 public class VibrateFragment extends Fragment {
 
-    private static final String TAG = "VibrateFragment";
+    private static final String TAG = "[jq]VibrateFragment";
     private static final String MODEL = "model";
     private static final String LOOP = "loop";
     @BindView(R.id.zoom_circle)
@@ -28,6 +34,7 @@ public class VibrateFragment extends Fragment {
     private String mLoop;
     // private ZoomCircleView mZoomCircle;
     private Unbinder mUnbinder;
+    private TrainingActivity mActivity;
 
     public VibrateFragment() {
         // Required empty public constructor
@@ -61,6 +68,9 @@ public class VibrateFragment extends Fragment {
         mUnbinder = ButterKnife.bind(this, view);
         mZoomCircle.setModelAndLoop(mModel, Integer.parseInt(mLoop));
 
+        mActivity = (TrainingActivity) getActivity();
+        mActivity.mGroupMain.setVisibility(View.GONE);
+
         return view;
     }
 
@@ -68,10 +78,27 @@ public class VibrateFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+        mActivity.mGroupMain.setVisibility(View.VISIBLE);
+        mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
-    // @OnClick(R.id.zoom_circle)
-    // public void onViewClicked() {
-    //     Log.d(TAG, "onClick: ");
-    // }
+    @OnClick(R.id.zoom_circle)
+    public void onView() {
+        Log.d(TAG, "onViewClicked: ");
+        Vibrator vib = mActivity.getVib();
+        long[] circlePattern = mZoomCircle.getPattern();
+        long[] pattern = new long[circlePattern.length + 1];
+
+        pattern[0] = 0;
+        for (int i = 0; i < circlePattern.length; i++) {
+            pattern[i + 1] = circlePattern[i];
+        }
+
+        vib.vibrate(pattern, -1);
+        mZoomCircle.setFinishListener(() -> {
+            Toast.makeText(mActivity, "finish", Toast.LENGTH_SHORT).show();
+            mActivity.mGroupMain.setVisibility(View.VISIBLE);
+            mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        });
+    }
 }

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.adolf.pcmaster.ZoomCircleView
+    <com.adolf.pcmaster.view.ZoomCircleView
         android:id="@+id/zoom_circle"
         android:layout_width="match_parent"
         android:layout_height="300dp"

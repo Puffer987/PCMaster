@@ -4,9 +4,9 @@
     android:id="@+id/parent_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VibrateFragment">
+    tools:context=".ui.VibrateFragment">
 
-    <com.adolf.pcmaster.ZoomCircleView
+    <com.adolf.pcmaster.view.ZoomCircleView
         android:id="@+id/zoom_circle"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

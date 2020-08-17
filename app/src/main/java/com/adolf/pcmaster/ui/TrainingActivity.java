@@ -1,17 +1,21 @@
-package com.adolf.pcmaster;
+package com.adolf.pcmaster.ui;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.adolf.pcmaster.R;
+import com.adolf.pcmaster.VibrateService;
 
 import java.util.regex.Pattern;
 
@@ -22,17 +26,19 @@ import butterknife.OnClick;
 public class TrainingActivity extends AppCompatActivity {
 
     @BindView(R.id.bModel)
-    EditText mBModel;
+    TextView mBModel;
     @BindView(R.id.bLoop)
-    EditText mBLoop;
+    TextView mBLoop;
     @BindView(R.id.eModel)
-    EditText mEModel;
+    TextView mEModel;
     @BindView(R.id.eLoop)
-    EditText mELoop;
+    TextView mELoop;
     @BindView(R.id.gModel)
-    EditText mGModel;
+    TextView mGModel;
     @BindView(R.id.gLoop)
-    EditText mGLoop;
+    TextView mGLoop;
+    @BindView(R.id.group_main)
+    LinearLayout mGroupMain;
 
     private String model = "";
     private String loop = "0";
@@ -51,13 +57,12 @@ public class TrainingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_training);
         ButterKnife.bind(this);
 
-        mVib = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
-
-
         init();
     }
 
     private void init() {
+        mVib = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+
         mBModel.setText("1500 1500 1500 1500");
         mBLoop.setText("10");
         mEModel.setText("3000 3000 3000 3000");
@@ -79,30 +84,37 @@ public class TrainingActivity extends AppCompatActivity {
             case R.id.bStart:
                 model = mBModel.getText().toString();
                 loop = mBLoop.getText().toString();
-                i.putExtra("model", model);
-                i.putExtra("loop", loop);
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.fragment_train_activity,new VibrateFragment().newInstance(model,loop)).commit();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.fragment_train_activity, new VibrateFragment().newInstance(model, loop))
+                        .addToBackStack("爆发")
+                        .commit();
 
                 break;
             case R.id.eStart:
                 model = mEModel.getText().toString();
                 loop = mELoop.getText().toString();
-                i.putExtra("model", model);
-                i.putExtra("loop", loop);
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.fragment_train_activity, new VibrateFragment().newInstance(model, loop))
+                        .addToBackStack("耐力")
+                        .commit();
+
                 break;
             case R.id.gStart:
                 model = mGModel.getText().toString();
                 loop = mGLoop.getText().toString();
-                i.putExtra("model", model);
-                i.putExtra("loop", loop);
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.fragment_train_activity, new VibrateFragment().newInstance(model, loop))
+                        .addToBackStack("阶梯")
+                        .commit();
+
                 break;
         }
-        // startService(i);
-
-
         // 屏幕常亮
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    public Vibrator getVib() {
+        return mVib;
     }
 
     private long[] str2long(String inStr, int loop) throws Exception {

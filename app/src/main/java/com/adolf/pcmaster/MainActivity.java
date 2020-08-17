@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.adolf.pcmaster.ui.TrainingActivity;
+import com.adolf.pcmaster.view.ZoomCircleView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mUnbinder = ButterKnife.bind(this);
 
-        mZoomCircle.setModelAndLoop("500 500 500 500 1300 1300 500 3000",0);
+        mZoomCircle.setModelAndLoop("500 500 500 500 1300 1300 500 3000", 0);
     }
+
     @OnClick(R.id.btn_lets_go)
     public void onViewClicked() {
         startActivity(new Intent(this, TrainingActivity.class));
@@ -40,4 +44,5 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         mUnbinder.unbind();
     }
+
 }

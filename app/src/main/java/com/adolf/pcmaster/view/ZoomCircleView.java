@@ -1,4 +1,4 @@
-package com.adolf.pcmaster;
+package com.adolf.pcmaster.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -113,6 +113,7 @@ public class ZoomCircleView extends View {
             } else {
                 isClick = false;// 退出
                 curIndex = -1; // 循环结束，再次设为负数
+                mFinishListener.showInfo();
             }
             invalidate();
         }
@@ -147,22 +148,11 @@ public class ZoomCircleView extends View {
         }
     }
 
-    public void doUpdateRadius(View v) {
-        if (curIndex < 0) {
-            Log.d(TAG, "do onClick");
-            isTight = true;
-            isFinishACycle = false;
-            isClick = true;
-            curIndex = 0;
-            invalidate();
-        }
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                event.getX();
                 Log.d(TAG, "down");
                 // break;
             case MotionEvent.ACTION_UP:
@@ -178,6 +168,19 @@ public class ZoomCircleView extends View {
         }
 
         return super.onTouchEvent(event);
+    }
+
+    public long[] getPattern() {
+        return mPattern;
+    }
+
+    // 以下三个是为了向外界传递循环结束的信息
+    public interface OnFinishListener{
+        void showInfo();
+    }
+    private OnFinishListener mFinishListener;
+    public void setFinishListener(OnFinishListener finishListener) {
+        mFinishListener = finishListener;
     }
 
     private long[] str2long(String inStr, int loop) throws Exception {
