@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:padding="10dp"
-    android:background="?attr/colorPrimary">
+    android:layout_height="280dp"
+    android:padding="10dp">
 
     <ImageView
-        android:id="@+id/icon_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_launcher" />
+        android:id="@+id/nav_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_nav_header" />
 
+    <ImageView
+        android:id="@+id/nav_avatar"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_launcher" />
     <TextView
         android:id="@+id/nav_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/nav_mail"
+        android:layout_toEndOf="@+id/nav_avatar"
         android:text="Adolf"
         android:textColor="#cccccc"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/nav_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/nav_avatar"
+        android:layout_toEndOf="@+id/nav_avatar"
+        android:layout_marginBottom="10dp"
         android:text="123456789@qq.com"
-        android:layout_above="@+id/nav_username"
         android:textColor="#cccccc"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

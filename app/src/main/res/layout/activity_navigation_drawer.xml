@@ -20,28 +20,27 @@
             app:popupTheme="@style/ToolbarTheme" />
     </FrameLayout>
 
-
-
     <!-- 内容 -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/btn_context"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
             android:text="context" />
 
     </FrameLayout>
 
     <!-- 左边菜单 -->
     <FrameLayout
-        android:background="@color/colorAccent"
+        android:layout_width="390dp"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_width="400dp"
-        android:layout_height="match_parent">
+        android:background="@color/colorAccent">
+
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="match_parent"

@@ -1,29 +1,38 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">#4A148C</item>
-        <item name="colorPrimaryDark">#4A148C</item>
-        <item name="colorAccent">#CCFF90</item>
-    </style>
+<!-- Base application theme. -->
+<style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+</style>
 
-    <!--Toolbar的Theme的设置，都是针对popup的设置-->
-    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorBackground">#9A9A9A</item><!--设置背景颜色的-->
-        <item name="android:textColorPrimary">#1B5E20</item><!--设置文字颜色的-->
-        <item name="android:textSize">20sp</item><!--设置文字大小的-->
-        <item name="actionOverflowMenuStyle">@style/OverflowMenuTheme</item><!--设置弹出位置的主题-->
-    </style>
-    <!--Toolbar弹出popup主题的设置-->
-    <style name="OverflowMenuTheme" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
-        <item name="overlapAnchor">false</item>
-        <!--这个属性设置为false，就能使得popup在Toolbar的下面显示-->
-    </style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+<!--Toolbar的Theme的设置，都是针对popup的设置-->
+<style name="ToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:colorBackground">#BCBCBC</item><!--设置背景颜色的-->
+    <item name="android:textColorPrimary">#311B92</item><!--设置文字颜色的-->
+    <item name="android:textSize">20sp</item><!--设置文字大小的-->
+    <item name="actionOverflowMenuStyle">@style/OverflowMenuTheme</item><!--设置弹出位置的主题-->
+</style>
+<!--Toolbar弹出popup主题的设置-->
+<style name="OverflowMenuTheme" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+    <item name="overlapAnchor">false</item>
+    <!--这个属性设置为false，就能使得popup在Toolbar的下面显示-->
+</style>
+
+<style name="BaseTheme" parent="AppTheme">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:textColorSecondary">#ffffff</item>
+</style>
+
+<!--<style name="AppTheme.NoActionBar">-->
+<!--    <item name="windowActionBar">false</item>-->
+<!--    <item name="windowNoTitle">true</item>-->
+<!--</style>-->
+
+<!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+
+<!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
 </resources>

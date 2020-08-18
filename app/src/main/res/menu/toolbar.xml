@@ -30,7 +30,7 @@
         android:id="@+id/delete"
         android:icon="@drawable/ic_bin"
         android:title="Delete"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/setting"

@@ -37,6 +37,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // 开启左侧的按钮
@@ -45,23 +46,21 @@ public class NavigationDrawerActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_48);
         }
         mNavView.setCheckedItem(R.id.nav_setting);// 默认选中项目
-        mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_back:
-                        Toast.makeText(NavigationDrawerActivity.this, "Backup..", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_bin:
-                        Toast.makeText(NavigationDrawerActivity.this, "Delete..", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_setting:
-                        Toast.makeText(NavigationDrawerActivity.this, "Setting..", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                mParentDrawer.closeDrawers();
-                return true;
+
+        mNavView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.nav_back:
+                    Toast.makeText(NavigationDrawerActivity.this, "Backup..", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_bin:
+                    Toast.makeText(NavigationDrawerActivity.this, "Delete..", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_setting:
+                    Toast.makeText(NavigationDrawerActivity.this, "Setting..", Toast.LENGTH_SHORT).show();
+                    break;
             }
+            mParentDrawer.closeDrawers();
+            return true;
         });
 
         mParentDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {

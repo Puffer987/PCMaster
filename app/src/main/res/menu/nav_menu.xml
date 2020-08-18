@@ -6,6 +6,7 @@
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_setting"
+            
             android:title="设置" />
         <item
             android:id="@+id/nav_bin"
