@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NavigationDrawerActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ToolbarTheme" />
+    </FrameLayout>
+
+
+
+    <!-- 内容 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp">
+
+        <Button
+            android:id="@+id/btn_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="context" />
+
+    </FrameLayout>
+
+    <!-- 左边菜单 -->
+    <FrameLayout
+        android:background="@color/colorAccent"
+        android:layout_gravity="start"
+        android:layout_width="400dp"
+        android:layout_height="match_parent">
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/nav_menu" />
+
+    </FrameLayout>
+
+    <!--右边菜单 -->
+    <FrameLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/colorAccent">
+
+        <Button
+            android:id="@+id/btn_right_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="right menu" />
+    </FrameLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

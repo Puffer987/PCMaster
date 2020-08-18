@@ -7,18 +7,34 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ToolbarTheme"
+            app:title="PC Master"/>
+
+    </FrameLayout>
+
     <com.adolf.pcmaster.view.ZoomCircleView
         android:id="@+id/zoom_circle"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp" />
 
     <TextView
         android:id="@+id/tv_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="100dp"
         android:layout_gravity="center"
+        android:paddingTop="80dp"
         android:text="保持正常呼吸\n避免屏气"
         android:textAlignment="center"
         android:textSize="40sp" />
