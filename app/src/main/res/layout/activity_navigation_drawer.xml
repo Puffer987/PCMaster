@@ -21,7 +21,7 @@
     </FrameLayout>
 
     <!-- 内容 -->
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,11 +32,20 @@
             android:layout_marginTop="300dp"
             android:text="context" />
 
-    </FrameLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:elevation="1dp"
+            android:layout_margin="24dp"
+            android:src="@drawable/ic_setting" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <!-- 左边菜单 -->
     <FrameLayout
-        android:layout_width="390dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorAccent">

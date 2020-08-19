@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         mZoomCircle.setModelAndLoop("500 500 500 500 1300 1300 500 3000", 0);
 
         setSupportActionBar(mToolbar);
-        startActivity(new Intent(this, NavigationDrawerActivity.class));
-        // startActivity(new Intent(this, TrainingActivity.class));
+        // startActivity(new Intent(this, NavigationDrawerActivity.class));
+        startActivity(new Intent(this, TrainingActivity.class));
     }
 
     @Override

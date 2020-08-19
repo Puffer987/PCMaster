@@ -15,7 +15,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.adolf.pcmaster.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +32,8 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.nav_view)
     NavigationView mNavView;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         mNavView.setCheckedItem(R.id.nav_setting);// 默认选中项目
 
         mNavView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.nav_back:
                     Toast.makeText(NavigationDrawerActivity.this, "Backup..", Toast.LENGTH_SHORT).show();
                     break;
@@ -87,6 +92,16 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                 //菜单状态改变时调用
                 // Log.d(TAG, "onDrawerStateChanged: ");
             }
+        });
+        
+        mFab.setOnClickListener(view->{
+            Log.i(TAG, "点击了悬浮按钮");
+            // Snackbar和Toast一样最后也需要使用show()才能展示
+            Snackbar.make(view,"执行了删除", Snackbar.LENGTH_LONG)
+                    .setAction("撤销",v ->{
+                        Log.d(TAG, "undo");
+                        Toast.makeText(this, "撤销了删除", Toast.LENGTH_SHORT).show();
+                    }).show();
         });
     }
 
