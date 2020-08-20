@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,8 +64,8 @@ public class TrainingActivity extends AppCompatActivity {
     Button mBtnNight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.rv_tranings)
-    RecyclerView mRvTranings;
+    @BindView(R.id.rv_trainings)
+    RecyclerView mRvTrainings;
 
     private String model = "";
     private String loop = "0";
@@ -99,17 +98,26 @@ public class TrainingActivity extends AppCompatActivity {
         mTrainings.add(new TrainingItemBean("1500 1500 1500 1500", 10, "爆发1.5"));
         mTrainings.add(new TrainingItemBean("3000 3000 3000 3000", 5, "爆发3"));
         mTrainings.add(new TrainingItemBean("5000 5000 5000 5000", 4, "爆发5"));
+        mTrainings.add(new TrainingItemBean("1500 1500 1500 1500", 10, "爆发1.5"));
+        mTrainings.add(new TrainingItemBean("3000 3000 3000 3000", 5, "爆发3"));
+        mTrainings.add(new TrainingItemBean("5000 5000 5000 5000", 4, "爆发5"));
+        mTrainings.add(new TrainingItemBean("1500 1500 1500 1500", 10, "爆发1.5"));
+        mTrainings.add(new TrainingItemBean("3000 3000 3000 3000", 5, "爆发3"));
+        mTrainings.add(new TrainingItemBean("5000 5000 5000 5000", 4, "爆发5"));
+        mTrainings.add(new TrainingItemBean("1500 1500 1500 1500", 10, "爆发1.5"));
+        mTrainings.add(new TrainingItemBean("3000 3000 3000 3000", 5, "爆发3"));
+        mTrainings.add(new TrainingItemBean("5000 5000 5000 5000", 4, "爆发5"));
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        mRvTranings.setLayoutManager(layoutManager);
+        mRvTrainings.setLayoutManager(layoutManager);
         TrainingAdapter adapter = new TrainingAdapter(mTrainings);
-        mRvTranings.setAdapter(adapter);
+        mRvTrainings.setAdapter(adapter);
         // mGModel.setText("3000 500 1000 500 1000 2000 1000 500 1000 500");
 
         mPreferences = getSharedPreferences("check", MODE_PRIVATE);
         mEditor = mPreferences.edit();
         int days = mPreferences.getInt(COUNT_DAYS, 0);
-        mTvDays.setText(days + "");
+        mTvDays.setText(days+"");
 
         boolean morning = mPreferences.getBoolean(CHECK_MORNING, false);
         boolean afternoon = mPreferences.getBoolean(CHECK_AFTERNOON, false);
