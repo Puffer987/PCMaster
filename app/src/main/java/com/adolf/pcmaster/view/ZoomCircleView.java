@@ -89,14 +89,15 @@ public class ZoomCircleView extends View {
         mWidth = MeasureSpec.getSize(widthMeasureSpec);
         mHeight = MeasureSpec.getSize(heightMeasureSpec);
         int min = Math.min(mWidth, mHeight);
-        mHeight = min;
-        mWidth = min;
-        mMaxRadius = (min >> 1) - (min >> 3);
+        // mHeight = min;
+        // mWidth = min;
+        // mMaxRadius = (min >> 1) - (min >> 3);
+        // mMinRadius = min >> 3;
+        mMaxRadius = (float) Math.sqrt(mWidth * mWidth + mHeight * mHeight) / 2;
         mMinRadius = min >> 3;
-        // mMaxRadius = 300;
         mRadius = mMaxRadius;
         mOrgTotalSeconds = ((mMaxRadius - mMinRadius) / 60.0f) * 1000;
-        setMeasuredDimension(min, min);
+        // setMeasuredDimension(mWidth, mHeight);
     }
 
     @Override
@@ -113,7 +114,9 @@ public class ZoomCircleView extends View {
             } else {
                 isClick = false;// 退出
                 curIndex = -1; // 循环结束，再次设为负数
-                mFinishListener.showInfo();
+                Log.d(TAG, "fishing...  mFinishListener: "+(mFinishListener != null));
+                if (mFinishListener != null)
+                    mFinishListener.showInfo();
             }
             invalidate();
         }
@@ -175,10 +178,12 @@ public class ZoomCircleView extends View {
     }
 
     // 以下三个是为了向外界传递循环结束的信息
-    public interface OnFinishListener{
+    public interface OnFinishListener {
         void showInfo();
     }
+
     private OnFinishListener mFinishListener;
+
     public void setFinishListener(OnFinishListener finishListener) {
         mFinishListener = finishListener;
     }

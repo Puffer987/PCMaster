@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
     android:layout_margin="5dp"
     app:cardCornerRadius="5dp">
-
 
     <ImageView
         android:id="@+id/item_iv_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="fitEnd"
+        android:src="@drawable/bg_train_item" />
+
+
+    <com.adolf.pcmaster.view.ZoomCircleView
+        android:id="@+id/item_zcv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/item_tv_name"
@@ -19,6 +28,5 @@
         android:gravity="center_vertical|center_horizontal"
         android:text="1.5s爆发"
         android:textSize="20dp" />
-
 
 </androidx.cardview.widget.CardView>

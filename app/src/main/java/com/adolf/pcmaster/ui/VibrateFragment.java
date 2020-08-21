@@ -69,7 +69,6 @@ public class VibrateFragment extends Fragment {
         mZoomCircle.setModelAndLoop(mModel, Integer.parseInt(mLoop));
 
         mActivity = (TrainingActivity) getActivity();
-        mActivity.mGroupMain.setVisibility(View.GONE);
 
         return view;
     }
@@ -78,7 +77,6 @@ public class VibrateFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
-        mActivity.mGroupMain.setVisibility(View.VISIBLE);
         mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -97,7 +95,6 @@ public class VibrateFragment extends Fragment {
         vib.vibrate(pattern, -1);
         mZoomCircle.setFinishListener(() -> {
             Toast.makeText(mActivity, "finish", Toast.LENGTH_SHORT).show();
-            mActivity.mGroupMain.setVisibility(View.VISIBLE);
             mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         });
     }
