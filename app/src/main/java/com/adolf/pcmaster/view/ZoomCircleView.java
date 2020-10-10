@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -127,11 +128,12 @@ public class ZoomCircleView extends View {
                 mRadius = Math.max(mRadius - (mOrgTotalSeconds / tight), mMinRadius);
             } else if (mRadius == mMinRadius) {
                 isTight = false;
-                try {
-                    Thread.sleep(tightHold);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                SystemClock.sleep(tightHold);
+                // try {
+                //     Thread.sleep(tightHold);
+                // } catch (InterruptedException e) {
+                //     e.printStackTrace();
+                // }
             }
         } else {
             if (mRadius < mMaxRadius) {
@@ -139,11 +141,12 @@ public class ZoomCircleView extends View {
             } else if (mRadius == mMaxRadius) {
                 isTight = true;
                 isFinishACycle = true;
-                try {
-                    Thread.sleep(looseHold);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                SystemClock.sleep(looseHold);
+                // try {
+                //     Thread.sleep(looseHold);
+                // } catch (InterruptedException e) {
+                //     e.printStackTrace();
+                // }
             }
         }
     }
